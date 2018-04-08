@@ -1,6 +1,5 @@
 import requests, csv
 from bs4 import BeautifulSoup
-import mysql.connector
 
 with open('side-effects.tsv','r') as f:
     reader = csv.DictReader(f, delimiter='\t')
