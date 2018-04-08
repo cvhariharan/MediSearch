@@ -14,7 +14,10 @@ for each_id in db_id:
     r = requests.get("https://drugbank.ca/drugs/"+each_id)
     html = r.text
     soup = BeautifulSoup(html, "lxml")
-    name = soup.find("h1" , class_ = "align-self-center mr-4").text
+    name = 'null'
+    n = soup.find("h1" , class_ = "align-self-center mr-4")
+    if n is not None:
+        name = soup.find("h1" , class_ = "align-self-center mr-4").text
     syns = soup.find("ul", class_ = "list-unstyled table-list-break")
     synonyms = 'null'
     if syns is not None:
