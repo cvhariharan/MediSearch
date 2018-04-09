@@ -42,7 +42,7 @@ for each_id in db_id:
         des2 = tree.xpath("/html/body/main/div/div[4]/dl[2]/dd[3]/p/text()")
         if des2[0] is not None:
             description = description +" "+des2[0]
-        
+        description = description.replace("\n"," ")
         ind = soup.find("ul", class_ = "list-unstyled table-list")
         if ind is not None:
             uses = ind.text
