@@ -43,6 +43,7 @@ for each_id in db_id:
         if des2[0] is not None:
             description = description +" "+des2[0]
         description = description.replace("\n"," ")
+        name = name.replace("\n"," ")
         ind = soup.find("ul", class_ = "list-unstyled table-list")
         if ind is not None:
             uses = ind.text
