@@ -22,7 +22,7 @@ def search_name(name):
 
 @app.route('/page/<medi>')
 def page(medi):
-    cursor = conn.cursor()
+    cursor = conn.cursor(buffered = True)
     query = "SELECT Name,Description FROM Medicine WHERE ID='"+medi+"'"
     side_effects = "SELECT Side_effect from SideEffect WHERE ID='"+medi+"'"
     cursor.execute(query)
