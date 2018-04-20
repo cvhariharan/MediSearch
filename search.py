@@ -8,30 +8,41 @@ conn = mysql.connector.connect(host = "localhost", database = "MediSearch", user
 @app.route('/search',methods=['GET', 'POST'])
 def search_name():
     name = ""
-    if request.args.get('query', None):
-        name = request.args['query']
-    cursor = conn.cursor(buffered = True)
+    toFullText = True #Whether to do a full text search or not 
     query = "SELECT Name,ID FROM Medicine WHERE ID IN (SELECT ID FROM Name WHERE Name LIKE "+"'%"+name+"%') OR Name LIKE "+"'%"+name+"%'"
     full_query = "SELECT Name, ID FROM Medicine WHERE MATCH(Description) AGAINST('"+name+"')"
+    if request.args.get('query', None):
+        name = request.args['query']
+        test = name.split(":")
+        if len(test) > 0:
+            if test[1] == "s":
+                query = "SELECT Name,ID FROM Medicine WHERE ID IN (SELECT ID FROM SideEffect WHERE side_effect LIKE "+"'%"+test[0]+"%')"
+                toFullText = False
+    cursor = conn.cursor(buffered = True)
+    
     cursor.execute(query)
-    results = ""
+    results = []
     row = cursor.fetchone()
     if row is None:
-        cursor.execute(full_query)
-        row = cursor.fetchone()
-        if row is None:
-            return "No results found."
-        while row is not None:
-            temp = "<a href=\"http://localhost:5000/page/"+row[1]+"\">"+row[0]+"</a>"
-            results = results + temp + "<br>"
+        if toFullText:
+            cursor.execute(full_query)
             row = cursor.fetchone()
+            if row is None:
+                return "<center><h2>No results found.</h2></center>"
+            while row is not None:
+                temp = "<a href=\"http://localhost:5000/page/"+row[1]+"\">"+row[0]+"</a>"
+                results.append(temp)
+                row = cursor.fetchone()
+        else:
+            return "<center><h2>No results found.</h2></center>"
     while row is not None:
         temp = "<a href=\"http://localhost:5000/page/"+row[1]+"\">"+row[0]+"</a>"
-        results = results + temp + "<br>"
+        results.append(temp)
         row = cursor.fetchone()
+        
     
         
-    return results
+    return render_template('results.html', result=results)
     cursor.close()
 
 @app.route('/page/<medi>')
@@ -46,7 +57,7 @@ def page(medi):
     row = cursor.fetchone()
     
     if row is None:
-        return "No results found."
+        return "<center><h2>No results found.</h2></center>"
     else:
         #Fetch side effects
         cursor.execute(side_effects)
