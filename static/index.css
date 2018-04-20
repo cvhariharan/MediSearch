@@ -1,0 +1,45 @@
+.search-container input {
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/VisualEditor_-_Icon_-_Search-big.svg/768px-VisualEditor_-_Icon_-_Search-big.svg.png);
+    background-repeat: no-repeat;
+    background-position: 18px 4px;
+    -webkit-box-shadow: 0 5px 18px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 5px 18px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 18px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+    margin: 100px auto;
+    padding: 15px 10px;
+    position: relative;
+    outline: none;
+    padding-left: 88px;
+    background-size: 50px;
+    height: 60px;
+    width: 600px;
+    border-radius: 1px;
+    background-color: #ffffff;
+    color: #000000 !important;
+    font-size: 18px !important;
+    border: none;
+    -webkit-transition: width 0.5s ease-in-out;
+    -moz-transition: width 0.5s ease-in-out;
+    -o-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  input[type="text"].animated-search::-webkit-input-placeholder {
+    font-size: 18px;
+    line-height: 18 !important;
+  }
+  
+  .animated-search:focus {
+    width: 708px;
+    border-color: #fff;
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  h1
+  {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 60px;
+    position: relative;
+    padding-top: 80px;
+  }

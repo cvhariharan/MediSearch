@@ -12,15 +12,26 @@ def search_name():
         name = request.args['query']
     cursor = conn.cursor(buffered = True)
     query = "SELECT Name,ID FROM Medicine WHERE ID IN (SELECT ID FROM Name WHERE Name LIKE "+"'%"+name+"%') OR Name LIKE "+"'%"+name+"%'"
+    full_query = "SELECT Name, ID FROM Medicine WHERE MATCH(Description) AGAINST('"+name+"')"
     cursor.execute(query)
+    results = ""
     row = cursor.fetchone()
-
-    while row is not None:
-        row = "<a href=\"http://localhost:5000/page/"+row[1]+"\">"+row[0]+"</a>"
-        return row
-        row = cursor.fetchone()
     if row is None:
-        return "No results found."
+        cursor.execute(full_query)
+        row = cursor.fetchone()
+        if row is None:
+            return "No results found."
+        while row is not None:
+            temp = "<a href=\"http://localhost:5000/page/"+row[1]+"\">"+row[0]+"</a>"
+            results = results + temp + "<br>"
+            row = cursor.fetchone()
+    while row is not None:
+        temp = "<a href=\"http://localhost:5000/page/"+row[1]+"\">"+row[0]+"</a>"
+        results = results + temp + "<br>"
+        row = cursor.fetchone()
+    
+        
+    return results
     cursor.close()
 
 @app.route('/page/<medi>')
