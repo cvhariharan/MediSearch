@@ -9,17 +9,18 @@ conn = mysql.connector.connect(host = "localhost", database = "MediSearch", user
 def search_name():
     name = ""
     toFullText = True #Whether to do a full text search or not 
-    query = "SELECT Name,ID FROM Medicine WHERE ID IN (SELECT ID FROM Name WHERE Name LIKE "+"'%"+name+"%') OR Name LIKE "+"'%"+name+"%'"
-    full_query = "SELECT Name, ID FROM Medicine WHERE MATCH(Description) AGAINST('"+name+"')"
     if request.args.get('query', None):
         name = request.args['query']
-        test = name.split(":")
-        if len(test) > 0:
-            if test[1] == "s":
-                query = "SELECT Name,ID FROM Medicine WHERE ID IN (SELECT ID FROM SideEffect WHERE side_effect LIKE "+"'%"+test[0]+"%')"
-                toFullText = False
-    cursor = conn.cursor(buffered = True)
+
+    query = "SELECT Name,ID FROM Medicine WHERE ID IN (SELECT ID FROM Name WHERE Name LIKE "+"'%"+name+"%') OR Name LIKE "+"'%"+name+"%'"
+    full_query = "SELECT Name, ID FROM Medicine WHERE MATCH(Description) AGAINST('"+name+"')"
     
+    test = name.split(":")
+    if len(test) > 1:
+        if test[1] == "s":
+            query = "SELECT Name,ID FROM Medicine WHERE ID IN (SELECT ID FROM SideEffect WHERE side_effect LIKE "+"'%"+test[0]+"%')"
+            toFullText = False
+    cursor = conn.cursor(buffered = True)
     cursor.execute(query)
     results = []
     row = cursor.fetchone()
