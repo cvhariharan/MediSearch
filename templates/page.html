@@ -1,13 +1,14 @@
 <html>
   <head>
     <title>MediSearch</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
   </head>
 
   <body>
     <center>
       <div class="info">
         <h1>{{result["Name"]}}</h1>
-      <table border="1", style="width:85%">
+        <table class="pure-table pure-table-bordered">
 	{% for key, value in result.items() %}
 	<tr>
     <td><h2>{{key}}</h2> </td>
