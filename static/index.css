@@ -43,3 +43,12 @@
     position: relative;
     padding-top: 80px;
   }
+  a:link {
+    text-decoration: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 26px;
+}
+.card-3 {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  padding: 50px;
+}
