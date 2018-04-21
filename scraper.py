@@ -3,12 +3,12 @@ from bs4 import BeautifulSoup
 from lxml import html
 
 with open('side-effects.tsv','r') as f:
-    reader = csv.DictReader(f, delimiter='\t')
+    reader = csv.reader(f, delimiter='\t')
     ids = []
     for row in reader:
-        ids.append(row['drugbank_id'])
+        ids.append(row[0])
     db_id = set(ids)
-    print(db_id)
+    print(len(db_id))
 medicines = open("medicines.tsv","w")
 names = open("names.tsv", "w")
 symptoms = open("categories.tsv","w")

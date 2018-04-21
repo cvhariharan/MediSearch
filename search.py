@@ -53,7 +53,7 @@ def page(medi):
     side_effects = "SELECT Side_effect from SideEffect WHERE ID='"+medi+"'"
     comman_names = "SELECT Name from Brand WHERE ID ='"+medi+"'"
     categories = "SELECT Name from Name WHERE ID ='"+medi+"'"
-    url = "http://drugbank.ca/"+medi
+    url = "<a href = \"http://drugbank.ca/"+medi+"\"> http://drugbank.ca/"+medi+"</a>"
     cursor.execute(query)
     row = cursor.fetchone()
     
@@ -98,6 +98,9 @@ def page(medi):
             
         return render_template('page.html',result=results)
         #return "<h2>"+row[0]+"</h2><br>"+"<h2>Description: </h2>"+row[1]+"<br> <h2>Side Effects</h2>"+all_effects
+    
+    #Update the counter associated with the searched medicine
+    cursor.execute("SELECT update_counter('"+medi+"')") 
     cursor.close()
 
 if __name__ == '__main__':

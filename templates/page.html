@@ -12,7 +12,7 @@
 	{% for key, value in result.items() %}
 	<tr>
     <td><h2>{{key}}</h2> </td>
-    <td>{{value}}</td>
+    <td>{{value|safe}}</td>
 	</tr>
 	{%endfor%}
       </table>
